@@ -8,13 +8,13 @@
 <style>
 :root{color-scheme:dark;--bg:#071b25;--panel:#102c35;--panel2:#143640;--gold:#e8c77b;--muted:#a8bdba;--white:#f5f2e9;--green:#70c6a1;--line:#ffffff18}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--white)}
-body{min-height:100vh;overflow-x:hidden;background:radial-gradient(ellipse at 50% -15%,#1b4650 0,transparent 58%),linear-gradient(180deg,#0a202a,#06151e)}
+body{min-height:100vh;overflow-x:hidden;background-color:#071b25;background-image:linear-gradient(180deg,rgba(4,18,27,.48),rgba(4,18,27,.76)),url("assets/realistic_moon_grand_mosque.svg");background-position:center center;background-size:cover;background-repeat:no-repeat;background-attachment:fixed}
 .page{width:min(1500px,100%);min-height:100vh;margin:auto;padding:clamp(18px,3vw,42px);display:flex;flex-direction:column;position:relative;isolation:isolate}
 .page:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.13;pointer-events:none;background-image:radial-gradient(#e8c77b 0.7px,transparent .7px);background-size:27px 27px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
 header{display:flex;justify-content:space-between;align-items:center;gap:18px}
 .brand{display:flex;align-items:center;gap:13px}.brand img{width:48px;height:48px}.eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}h1{font-size:clamp(1.2rem,2.2vw,1.8rem);margin:3px 0 0;letter-spacing:.02em}
 .clock{text-align:right;font-variant-numeric:tabular-nums}.clock strong{display:block;font-size:clamp(1.5rem,3.4vw,2.6rem);font-weight:500;letter-spacing:.04em}.clock span{font-size:.82rem;color:var(--muted)}
-.intro{text-align:center;margin:clamp(28px,5vh,58px) 0 24px}.intro .hijri{color:var(--gold);font-size:.88rem;letter-spacing:.12em}.intro h2{font-weight:400;font-size:clamp(1.4rem,3vw,2.25rem);margin:8px 0 5px}.intro p{margin:0;color:var(--muted);font-size:.9rem}
+.intro{text-align:center;margin:clamp(28px,5vh,58px) 0 24px}.intro .hijri{color:var(--gold);font-size:.82rem;letter-spacing:.12em}.intro h2{font-weight:400;font-size:clamp(1.4rem,3vw,2.25rem);margin:8px 0 5px}.intro p{margin:0;color:var(--muted);font-size:.9rem}
 .next{width:min(620px,100%);margin:0 auto 28px;padding:18px 24px;border:1px solid #e8c77b55;border-radius:18px;background:linear-gradient(110deg,#153b40dd,#102b36dd);display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 12px 38px #0003}
 .next small{display:block;color:var(--muted);letter-spacing:.13em;text-transform:uppercase;font-size:.68rem}.next strong{display:block;margin-top:4px;font-size:1.2rem;font-weight:500}.countdown{font-variant-numeric:tabular-nums;font-size:clamp(1.4rem,3vw,2.2rem);color:var(--gold);letter-spacing:.06em;white-space:nowrap}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-width:1040px;width:100%;margin:0 auto;position:relative;z-index:1}
@@ -52,7 +52,7 @@ footer{margin-top:auto;padding-top:26px;display:flex;justify-content:space-betwe
   <article class="prayer" data-key="maghrib"><div class="name">Maghrib</div><div class="time">--:--</div><div class="state"></div></article>
   <article class="prayer" data-key="isyak"><div class="name">Isyak</div><div class="time">--:--</div><div class="state"></div></article>
 </section>
-<img class="footer-art" src="assets/mosque.svg" alt="" aria-hidden="true">
+
 <footer><div class="status"><i class="dot" id="status-dot"></i><span id="status">Connecting to prayer-times service</span></div><span>PrayerSG · Asia/Singapore</span></footer>
 </main>
 <script>
