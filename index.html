@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071b25">
+<title>PrayerSG — Singapore Prayer Times</title>
+<style>
+:root{color-scheme:dark;--bg:#071b25;--panel:#102c35;--panel2:#143640;--gold:#e8c77b;--muted:#a8bdba;--white:#f5f2e9;--green:#70c6a1;--line:#ffffff18}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--white)}
+body{min-height:100vh;overflow-x:hidden;background:radial-gradient(ellipse at 50% -15%,#1b4650 0,transparent 58%),linear-gradient(180deg,#0a202a,#06151e)}
+.page{width:min(1500px,100%);min-height:100vh;margin:auto;padding:clamp(18px,3vw,42px);display:flex;flex-direction:column;position:relative;isolation:isolate}
+.page:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.13;pointer-events:none;background-image:radial-gradient(#e8c77b 0.7px,transparent .7px);background-size:27px 27px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+header{display:flex;justify-content:space-between;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:13px}.brand img{width:48px;height:48px}.eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}h1{font-size:clamp(1.2rem,2.2vw,1.8rem);margin:3px 0 0;letter-spacing:.02em}
+.clock{text-align:right;font-variant-numeric:tabular-nums}.clock strong{display:block;font-size:clamp(1.5rem,3.4vw,2.6rem);font-weight:500;letter-spacing:.04em}.clock span{font-size:.82rem;color:var(--muted)}
+.intro{text-align:center;margin:clamp(28px,5vh,58px) 0 24px}.intro .hijri{color:var(--gold);font-size:.88rem;letter-spacing:.12em}.intro h2{font-weight:400;font-size:clamp(1.4rem,3vw,2.25rem);margin:8px 0 5px}.intro p{margin:0;color:var(--muted);font-size:.9rem}
+.next{width:min(620px,100%);margin:0 auto 28px;padding:18px 24px;border:1px solid #e8c77b55;border-radius:18px;background:linear-gradient(110deg,#153b40dd,#102b36dd);display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 12px 38px #0003}
+.next small{display:block;color:var(--muted);letter-spacing:.13em;text-transform:uppercase;font-size:.68rem}.next strong{display:block;margin-top:4px;font-size:1.2rem;font-weight:500}.countdown{font-variant-numeric:tabular-nums;font-size:clamp(1.4rem,3vw,2.2rem);color:var(--gold);letter-spacing:.06em;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-width:1040px;width:100%;margin:0 auto;position:relative;z-index:1}
+.prayer{min-height:clamp(112px,15vh,160px);padding:clamp(14px,2vw,24px);border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#163943,#0d2933);display:flex;flex-direction:column;justify-content:space-between;transition:transform .2s,border-color .2s,background .2s}
+.prayer .name{font-size:.82rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}.prayer .time{font-size:clamp(1.5rem,3.1vw,2.35rem);font-weight:500;letter-spacing:.025em;font-variant-numeric:tabular-nums}.prayer .state{font-size:.68rem;color:var(--muted);min-height:1em}
+.prayer.active{border-color:var(--gold);background:linear-gradient(145deg,#28534c,#173b3b);box-shadow:0 0 0 1px #e8c77b22,0 12px 30px #0003}.prayer.active .name,.prayer.active .state{color:#f0d99f}
+.prayer.passed{opacity:.68}
+footer{margin-top:auto;padding-top:26px;display:flex;justify-content:space-between;align-items:end;gap:16px;color:#8da7a5;font-size:.72rem}.footer-art{width:min(340px,36vw);opacity:.82;display:block;margin:20px auto -5px}
+.status{display:flex;align-items:center;gap:7px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block}.dot.error{background:#e69a75}
+@media(max-width:650px){.page{padding:18px 14px 14px}.brand img{width:40px;height:40px}.brand .eyebrow{font-size:.6rem}.brand h1{font-size:1.05rem}.clock strong{font-size:1.55rem}.intro{margin:28px 0 18px}.next{padding:14px 16px;margin-bottom:18px}.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.prayer{min-height:112px;padding:12px 10px;border-radius:13px}.prayer .name{font-size:.66rem;letter-spacing:.08em}.prayer .time{font-size:clamp(1.15rem,5vw,1.65rem)}.prayer .state{font-size:.6rem}footer{font-size:.65rem}}
+@media(max-width:360px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.prayer{min-height:105px}.clock span{font-size:.7rem}}
+@media(min-width:1000px) and (min-height:700px){.intro{margin-top:5vh}.next{margin-bottom:34px}.grid{gap:18px}.prayer{min-height:150px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header>
+  <div class="brand"><img src="assets/mosque.svg" alt=""><div><div class="eyebrow">Singapore</div><h1>PrayerSG</h1></div></div>
+  <div class="clock"><strong id="clock">--:--:--</strong><span id="gregorian">Loading local date…</span></div>
+</header>
+<section class="intro">
+  <div class="hijri" id="hijri">—</div>
+  <h2 id="daydate">Singapore Prayer Times</h2>
+  <p>Daily prayer timetable</p>
+</section>
+<section class="next" aria-live="polite">
+  <div><small id="next-label">Next prayer</small><strong id="next-name">Loading timetable…</strong></div>
+  <div class="countdown" id="countdown">--:--:--</div>
+</section>
+<section class="grid" id="prayer-grid" aria-label="Prayer times">
+  <article class="prayer" data-key="subuh"><div class="name">Subuh</div><div class="time">--:--</div><div class="state"></div></article>
+  <article class="prayer" data-key="syuruk"><div class="name">Syuruk</div><div class="time">--:--</div><div class="state"></div></article>
+  <article class="prayer" data-key="zohor"><div class="name">Zohor</div><div class="time">--:--</div><div class="state"></div></article>
+  <article class="prayer" data-key="asar"><div class="name">Asar</div><div class="time">--:--</div><div class="state"></div></article>
+  <article class="prayer" data-key="maghrib"><div class="name">Maghrib</div><div class="time">--:--</div><div class="state"></div></article>
+  <article class="prayer" data-key="isyak"><div class="name">Isyak</div><div class="time">--:--</div><div class="state"></div></article>
+</section>
+<img class="footer-art" src="assets/mosque.svg" alt="" aria-hidden="true">
+<footer><div class="status"><i class="dot" id="status-dot"></i><span id="status">Connecting to prayer-times service</span></div><span>PrayerSG · Asia/Singapore</span></footer>
+</main>
+<script>
+(() => {
+  const API = 'https://api.prayertimes.sg/api/v1/prayer-times/today';
+  const KEYS = ['subuh','syuruk','zohor','asar','maghrib','isyak'];
+  const NAMES = {subuh:'Subuh',syuruk:'Syuruk',zohor:'Zohor',asar:'Asar',maghrib:'Maghrib',isyak:'Isyak'};
+  const $ = id => document.getElementById(id);
+  let times = null, apiDate = null, lastFetch = 0;
+  const pad = n => String(n).padStart(2,'0');
+  const nowSG = () => new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Singapore'}));
+  const fmtClock = d => d.toLocaleTimeString('en-GB',{hour12:false});
+  function parseTime(s, base) {
+    if (!s || typeof s !== 'string') return null;
+    const m = s.match(/(\d{1,2}):(\d{2})\s*(AM|PM)?/i);
+    if (!m) return null;
+    let h = Number(m[1]), min = Number(m[2]);
+    if (m[3]) { const ap=m[3].toUpperCase(); h=h%12+(ap==='PM'?12:0); }
+    const d = new Date(base); d.setHours(h,min,0,0); return d;
+  }
+  function updateClock() {
+    const d=nowSG();
+    $('clock').textContent=fmtClock(d);
+    $('gregorian').textContent=d.toLocaleDateString('en-SG',{timeZone:'Asia/Singapore',weekday:'long',day:'numeric',month:'long',year:'numeric'});
+    render();
+  }
+  function render() {
+    if (!times) return;
+    const now=nowSG(), events=KEYS.map(k=>({key:k,name:NAMES[k],at:parseTime(times[k],now)})).filter(x=>x.at);
+    const next=events.find(x=>x.at>now);
+    const nextEvent=next || (events[0] ? {...events[0],at:new Date(events[0].at.getTime()+86400000)} : null);
+    let activeKey=null;
+    for (const e of events) if(e.at<=now && e.key!=='syuruk') activeKey=e.key;
+    document.querySelectorAll('.prayer').forEach(card=>{
+      const k=card.dataset.key, e=events.find(x=>x.key===k);
+      card.classList.toggle('active',k===activeKey);
+      card.classList.toggle('passed',!!e && e.at<=now && k!==activeKey);
+      card.querySelector('.time').textContent=times[k]||'—';
+      card.querySelector('.state').textContent=k===activeKey?'Current period':(e&&e.at<=now?'Completed':'');
+    });
+    if(nextEvent){
+      $('next-label').textContent=next?'Next prayer':'Next prayer · tomorrow';
+      $('next-name').textContent=nextEvent.name;
+      let sec=Math.max(0,Math.floor((nextEvent.at-now)/1000));
+      $('countdown').textContent=pad(Math.floor(sec/3600))+':'+pad(Math.floor(sec%3600/60))+':'+pad(sec%60);
+    }
+  }
+  function setStatus(msg,error=false){$('status').textContent=msg;$('status-dot').classList.toggle('error',error)}
+  async function loadTimes(force=false){
+    if(!force && Date.now()-lastFetch<1800000) return;
+    try{
+      const res=await fetch(API,{cache:'no-store'});
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      const json=await res.json();
+      const data=json.data||json;
+      const t=data.times||data.prayer_times;
+      if(!t || !KEYS.every(k=>t[k])) throw new Error('Unexpected API response format');
+      times=t;apiDate=data.date||null;lastFetch=Date.now();
+      $('daydate').textContent=data.friendly_date||data.date||'Singapore Prayer Times';
+      $('hijri').textContent=data.hijri_date||'';
+      localStorage.setItem('prayersg-cache',JSON.stringify({times,apiDate,data:{friendly_date:data.friendly_date,hijri_date:data.hijri_date},saved:Date.now()}));
+      setStatus('Timetable updated · '+new Date().toLocaleTimeString('en-SG',{timeZone:'Asia/Singapore'}));
+      render();
+    }catch(err){
+      console.error(err);
+      if(!times){
+        try{const c=JSON.parse(localStorage.getItem('prayersg-cache'));if(c&&c.times){times=c.times;apiDate=c.apiDate;$('daydate').textContent=c.data.friendly_date||'Singapore Prayer Times';$('hijri').textContent=c.data.hijri_date||'';setStatus('Showing saved timetable · API unavailable',true);render();return;}}catch(_){}
+      }
+      setStatus('Unable to load timetable · '+err.message,true);
+    }
+  }
+  updateClock();loadTimes(true);
+  setInterval(updateClock,1000);
+  setInterval(()=>loadTimes(true),1800000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden){updateClock();loadTimes(true)}});
+})();
+</script>
+</body>
+</html>
