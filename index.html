@@ -85,7 +85,9 @@ footer{margin-top:auto;padding-top:26px;display:flex;justify-content:space-betwe
     const next=events.find(x=>x.at>now && x.key!=='syuruk');
     const nextEvent=next || (events[0] ? {...events[0],at:new Date(events[0].at.getTime()+86400000)} : null);
     let activeKey=null;
-    for (const e of events) if(e.at<=now && e.key!=='syuruk') activeKey=e.key;\n    const sunrise=events.find(x=>x.key==='syuruk');\n    if(sunrise && now>=sunrise.at && activeKey==='subuh') activeKey=null;
+    for (const e of events) if(e.at<=now && e.key!=='syuruk') activeKey=e.key;
+    const sunrise=events.find(x=>x.key==='syuruk');
+    if(sunrise && now>=sunrise.at && activeKey==='subuh') activeKey=null;
     document.querySelectorAll('.prayer').forEach(card=>{
       const k=card.dataset.key, e=events.find(x=>x.key===k);
       card.classList.toggle('active',k===activeKey);
