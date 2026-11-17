@@ -24,7 +24,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:18px}
 .prayer.passed{opacity:.68}
 footer{margin-top:auto;padding-top:26px;display:flex;justify-content:space-between;align-items:end;gap:16px;color:#8da7a5;font-size:.72rem}.footer-art{width:min(340px,36vw);opacity:.82;display:block;margin:20px auto -5px}
 .header-tools{display:flex;align-items:center;gap:clamp(12px,2vw,24px)}
-.azan-toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid #ffffff35;border-radius:999px;padding:10px 15px;background:#172c35d9;color:#aab5bb;font:600 .78rem inherit;letter-spacing:.12em;cursor:pointer;transition:all .2s}
+.azan-toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid #ffffff35;border-radius:999px;padding:10px 15px;background:#172c35d9;color:#aab5bb;font:inherit;font-weight:600;font-size:.78rem;letter-spacing:.12em;cursor:pointer;transition:all .2s}
 .azan-toggle .azan-symbol{font-size:1rem;letter-spacing:-.12em}.azan-toggle.enabled{background:#176b50;border-color:#70c6a1;color:#fff;box-shadow:0 0 18px #70c6a133}
 .audio-settings{width:min(440px,100%);margin:12px 0 0 auto;color:var(--muted);font-size:.78rem;text-align:right}
 .audio-settings summary{cursor:pointer;display:inline-block;padding:6px 0;color:var(--gold);list-style-position:inside}
@@ -87,7 +87,7 @@ footer{margin-top:auto;padding-top:26px;display:flex;justify-content:space-betwe
 </footer>
 <section class="credits" aria-label="Credits and sources">
   <strong>Credits &amp; Sources</strong>
-  <p>Prayer timetable: <a href="https://api.prayertimes.sg/" target="_blank" rel="noopener">PrayerTimesSG API</a>, using the official <a href="https://data.gov.sg/datasets/d_d441e7242e78efc566024dd5b0d9829c/view" target="_blank" rel="noopener">MUIS Muslim Prayer Timetable</a>.</p>
+  <p>Prayer timetable: <a href="https://api.prayertimes.sg/" target="_blank" rel="noopener">PrayerTimesSG API (ROQOM)</a>, using the official <a href="https://data.gov.sg/datasets/d_d441e7242e78efc566024dd5b0d9829c/view" target="_blank" rel="noopener">MUIS Muslim Prayer Timetable</a> published on data.gov.sg under the Singapore Open Data Licence.</p>
   <p>Adhan recordings: <a href="https://archive.org/details/adhan.recordings.from.doha.qatar" target="_blank" rel="noopener">Adhan Recordings from Doha, Qatar</a> — Fajr and Dhuhr recordings. Source item displays Public Domain Mark 1.0.</p>
 </section>
 <audio id="azan-audio" preload="none"></audio>
