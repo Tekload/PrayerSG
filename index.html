@@ -23,8 +23,21 @@ header{display:flex;justify-content:space-between;align-items:center;gap:18px}
 .prayer.active{border-color:var(--gold);background:linear-gradient(145deg,#28534c,#173b3b);box-shadow:0 0 0 1px #e8c77b22,0 12px 30px #0003}.prayer.active .name,.prayer.active .state{color:#f0d99f}
 .prayer.passed{opacity:.68}
 footer{margin-top:auto;padding-top:26px;display:flex;justify-content:space-between;align-items:end;gap:16px;color:#8da7a5;font-size:.72rem}.footer-art{width:min(340px,36vw);opacity:.82;display:block;margin:20px auto -5px}
+.header-tools{display:flex;align-items:center;gap:clamp(12px,2vw,24px)}
+.azan-toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid #ffffff35;border-radius:999px;padding:10px 15px;background:#172c35d9;color:#aab5bb;font:600 .78rem inherit;letter-spacing:.12em;cursor:pointer;transition:all .2s}
+.azan-toggle .azan-symbol{font-size:1rem;letter-spacing:-.12em}.azan-toggle.enabled{background:#176b50;border-color:#70c6a1;color:#fff;box-shadow:0 0 18px #70c6a133}
+.audio-settings{width:min(440px,100%);margin:12px 0 0 auto;color:var(--muted);font-size:.78rem;text-align:right}
+.audio-settings summary{cursor:pointer;display:inline-block;padding:6px 0;color:var(--gold);list-style-position:inside}
+.audio-panel{margin-top:8px;padding:14px;text-align:left;border:1px solid #ffffff22;border-radius:13px;background:#0b222ceF;box-shadow:0 10px 30px #0003}
+.audio-panel p{margin:0 0 8px}.audio-panel p:not(:first-child){margin-top:13px}
+.preview-button{border:1px solid #e8c77b66;border-radius:9px;background:#173b40;color:var(--white);padding:8px 11px;font:inherit;cursor:pointer}
+.audio-note{font-size:.7rem;color:#91aaa7}
+.site-footer{margin-top:auto}
+.credits{margin-top:13px;padding-top:12px;border-top:1px solid #ffffff20;color:#9bb0ad;font-size:.68rem;line-height:1.5}
+.credits strong{display:block;color:#e8c77b;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.credits p{margin:3px 0}.credits a{color:#e8c77b;text-decoration:underline;text-underline-offset:2px}
 .status{display:flex;align-items:center;gap:7px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block}.dot.error{background:#e69a75}
-@media(max-width:650px){.page{padding:18px 14px 14px}.brand img{width:40px;height:40px}.brand .eyebrow{font-size:.6rem}.brand h1{font-size:1.05rem}.clock strong{font-size:1.55rem}.intro{margin:28px 0 18px}.next{padding:14px 16px;margin-bottom:18px}.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.prayer{min-height:112px;padding:12px 10px;border-radius:13px}.prayer .name{font-size:.66rem;letter-spacing:.08em}.prayer .time{font-size:clamp(1.15rem,5vw,1.65rem)}.prayer .state{font-size:.6rem}footer{font-size:.65rem}}
+@media(max-width:650px){.page{padding:18px 14px 14px}.brand img{width:40px;height:40px}.brand .eyebrow{font-size:.6rem}.brand h1{font-size:1.05rem}.header-tools{gap:9px}.azan-toggle{padding:8px 10px;font-size:.68rem;gap:6px}.clock strong{font-size:1.55rem}.intro{margin:28px 0 18px}.next{padding:14px 16px;margin-bottom:18px}.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.prayer{min-height:112px;padding:12px 10px;border-radius:13px}.prayer .name{font-size:.66rem;letter-spacing:.08em}.prayer .time{font-size:clamp(1.15rem,5vw,1.65rem)}.prayer .state{font-size:.6rem}footer{font-size:.65rem}.credits{font-size:.62rem}.audio-settings{font-size:.72rem}}
 @media(max-width:360px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.prayer{min-height:105px}.clock span{font-size:.7rem}}
 @media(min-width:1000px) and (min-height:700px){.intro{margin-top:5vh}.next{margin-bottom:34px}.grid{gap:18px}.prayer{min-height:150px}}
 </style>
@@ -33,8 +46,23 @@ footer{margin-top:auto;padding-top:26px;display:flex;justify-content:space-betwe
 <main class="page">
 <header>
   <div class="brand"><div><div class="eyebrow">Singapore</div><h1>PrayerSG</h1></div></div>
-  <div class="clock"><strong id="clock">--:--:--</strong><span id="gregorian">Loading local date…</span></div>
+  <div class="header-tools">
+    <button class="azan-toggle" id="azan-toggle" type="button" aria-pressed="false" aria-label="Enable Adhan">
+      <span class="azan-symbol" id="azan-symbol" aria-hidden="true">◖))</span><span>AZAN</span>
+    </button>
+    <div class="clock"><strong id="clock">--:--:--</strong><span id="gregorian">Loading local date…</span></div>
+  </div>
 </header>
+<details class="audio-settings" id="audio-settings">
+  <summary>Adhan audio settings &amp; preview</summary>
+  <div class="audio-panel">
+    <p><strong>Subuh / Fajr</strong> — includes the additional Fajr call.</p>
+    <button type="button" class="preview-button" data-preview="subuh">▶ Preview Subuh Adhan</button>
+    <p><strong>Other prayers</strong> — standard Adhan for Zohor, Asar, Maghrib and Isyak.</p>
+    <button type="button" class="preview-button" data-preview="standard">▶ Preview standard Adhan</button>
+    <p class="audio-note">Preview buttons play even when the AZAN switch is OFF.</p>
+  </div>
+</details>
 <section class="intro">
   <div class="hijri" id="hijri">—</div>
   <h2 id="daydate">Singapore Prayer Times</h2>
@@ -53,15 +81,83 @@ footer{margin-top:auto;padding-top:26px;display:flex;justify-content:space-betwe
   <article class="prayer" data-key="isyak"><div class="name">Isyak</div><div class="time">--:--</div><div class="state"></div></article>
 </section>
 
-<footer><div class="status"><i class="dot" id="status-dot"></i><span id="status">Connecting to prayer-times service</span></div><span>PrayerSG · Asia/Singapore</span></footer>
+<footer class="site-footer">
+  <div class="status"><i class="dot" id="status-dot"></i><span id="status">Connecting to prayer-times service</span></div>
+  <span>PrayerSG · Asia/Singapore</span>
+</footer>
+<section class="credits" aria-label="Credits and sources">
+  <strong>Credits &amp; Sources</strong>
+  <p>Prayer timetable: <a href="https://api.prayertimes.sg/" target="_blank" rel="noopener">PrayerTimesSG API</a>, using the official <a href="https://data.gov.sg/datasets/d_d441e7242e78efc566024dd5b0d9829c/view" target="_blank" rel="noopener">MUIS Muslim Prayer Timetable</a>.</p>
+  <p>Adhan recordings: <a href="https://archive.org/details/adhan.recordings.from.doha.qatar" target="_blank" rel="noopener">Adhan Recordings from Doha, Qatar</a> — Fajr and Dhuhr recordings. Source item displays Public Domain Mark 1.0.</p>
+</section>
+<audio id="azan-audio" preload="none"></audio>
 </main>
 <script>
 (() => {
   const API = 'https://api.prayertimes.sg/api/v1/prayer-times/today';
+  const ADHAN_AUDIO = {
+    subuh: 'https://archive.org/download/adhan.recordings.from.doha.qatar/Adhan_Doha_Qatar_01_Fajr_Adhan.mp3',
+    standard: 'https://archive.org/download/adhan.recordings.from.doha.qatar/Adhan_Doha_Qatar_02_Dhuhr_Adhan.mp3'
+  };
   const KEYS = ['subuh','syuruk','zohor','asar','maghrib','isyak'];
   const NAMES = {subuh:'Subuh',syuruk:'Syuruk',zohor:'Zohor',asar:'Asar',maghrib:'Maghrib',isyak:'Isyak'};
   const $ = id => document.getElementById(id);
   let times = null, apiDate = null, lastFetch = 0;
+  const azanAudio = $('azan-audio');
+  let azanEnabled = localStorage.getItem('prayersg-azan-enabled') === 'true';
+  let lastAutomaticAzan = localStorage.getItem('prayersg-last-azan') || '';
+  function refreshAzanControl() {
+    const button = $('azan-toggle');
+    button.classList.toggle('enabled', azanEnabled);
+    button.setAttribute('aria-pressed', String(azanEnabled));
+    button.setAttribute('aria-label', azanEnabled ? 'Disable Adhan' : 'Enable Adhan');
+    $('azan-symbol').textContent = azanEnabled ? '◖))' : '◖';
+  }
+  async function playAzan(version, automatic=false) {
+    if (automatic && !azanEnabled) return;
+    azanAudio.src = ADHAN_AUDIO[version] || ADHAN_AUDIO.standard;
+    azanAudio.currentTime = 0;
+    try {
+      await azanAudio.play();
+      if (automatic) {
+        const d = nowSG();
+        lastAutomaticAzan = d.toLocaleDateString('en-CA',{timeZone:'Asia/Singapore'}) + ':' + version;
+        localStorage.setItem('prayersg-last-azan', lastAutomaticAzan);
+      }
+    } catch (err) {
+      console.warn('Adhan playback was blocked or unavailable:', err);
+      if (automatic) setStatus('Adhan could not play · tap AZAN and preview audio first', true);
+    }
+  }
+  function checkAzanSchedule() {
+    if (!azanEnabled || !times || document.hidden) return;
+    const now = nowSG();
+    if (now.getSeconds() > 3) return;
+    const dateKey = now.toLocaleDateString('en-CA',{timeZone:'Asia/Singapore'});
+    for (const key of ['subuh','zohor','asar','maghrib','isyak']) {
+      const prayerAt = parseTime(times[key], now);
+      if (!prayerAt) continue;
+      if (prayerAt.getHours() === now.getHours() && prayerAt.getMinutes() === now.getMinutes()) {
+        const version = key === 'subuh' ? 'subuh' : 'standard';
+        const playKey = dateKey + ':' + key;
+        if (lastAutomaticAzan !== playKey) {
+          lastAutomaticAzan = playKey;
+          localStorage.setItem('prayersg-last-azan', playKey);
+          playAzan(version, false);
+        }
+      }
+    }
+  }
+  $('azan-toggle').addEventListener('click', () => {
+    azanEnabled = !azanEnabled;
+    localStorage.setItem('prayersg-azan-enabled', String(azanEnabled));
+    refreshAzanControl();
+    if (!azanEnabled) azanAudio.pause();
+  });
+  document.querySelectorAll('[data-preview]').forEach(button => {
+    button.addEventListener('click', () => playAzan(button.dataset.preview, false));
+  });
+  refreshAzanControl();
   const pad = n => String(n).padStart(2,'0');
   const nowSG = () => new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Singapore'}));
   const fmtClock = d => d.toLocaleTimeString('en-GB',{hour12:false});
@@ -128,6 +224,7 @@ footer{margin-top:auto;padding-top:26px;display:flex;justify-content:space-betwe
   }
   updateClock();loadTimes(true);
   setInterval(updateClock,1000);
+  setInterval(checkAzanSchedule,1000);
   setInterval(()=>loadTimes(true),1800000);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden){updateClock();loadTimes(true)}});
 })();
